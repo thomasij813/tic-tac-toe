@@ -63,3 +63,14 @@ const confirmWin = (board) => {
 
     return null;
 }
+
+const confirmBoardFull = (board) => {
+    for (let i = 0; i < board.length; i++) {
+        let row = board[i];
+        if (row.indexOf(null) >= 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
