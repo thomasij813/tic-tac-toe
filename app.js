@@ -59,6 +59,21 @@ const initializeNewGame = () => {
     renderGameStatus(currentGame);
 }
 
+// get player names and render
+promptPlayerNames = () => {
+    const xPlayerName = prompt('Who is playing as X?');
+    const oPlayerName = prompt('Who is playing as O?');
+
+    if (xPlayerName) {
+        $('.x-player').text(`${xPlayerName} (X)`);
+    }
+
+    if (oPlayerName) {
+        $('.o-player').text(`${oPlayerName} (O)`);
+    }
+}
+
 // get everything rolling
 $('.new-game-button').on('click', initializeNewGame);
 renderWinTally();
+promptPlayerNames();
