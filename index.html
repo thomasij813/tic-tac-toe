@@ -9,10 +9,26 @@
 <body>
     <div class="head">
         <button class="new-game-button">New Game</button>
-        <p class="turn-display">Turn: <span class="player-turn">X</span></p>
+        <p class="game-status"></p>
         <p class="win-message"></p>
     </div>
-    <div class="board"></div>
+    <div class="board">
+        <p>
+            <span data-row="0" data-column="0"></span>
+            <span data-row="0" data-column="1"></span>
+            <span data-row="0" data-column="2"></span>
+        </p>
+        <p>
+            <span data-row="1" data-column="0"></span>
+            <span data-row="1" data-column="1"></span>
+            <span data-row="1" data-column="2"></span>
+        </p>
+        <p>
+            <span data-row="2" data-column="0"></span>
+            <span data-row="2" data-column="1"></span>
+            <span data-row="2" data-column="2"></span>
+        </p>
+    </div>
 
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"

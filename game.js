@@ -7,7 +7,7 @@ class Game {
         ];
         this.playerTurn = 'X';
         this.gameOver = false;
-        this.gameStatus = `Player ${this.playerTurn}'s turn`;
+        this.gameStatus = `Player X's turn`;
         this.turnCallBacks = [];
     }
 
@@ -37,6 +37,7 @@ class Game {
 
         if (!boardFull && !potentialWin) {
             this.changePlayerTurn();
+            this.gameStatus = `Player ${this.playerTurn}'s turn`;
         }
 
         this.turnCallBacks.forEach(cb => {
