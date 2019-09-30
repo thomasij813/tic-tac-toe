@@ -15,39 +15,44 @@ class Game {
         this.playerTurn = this.playerTurn === 'X' ? 'O' : 'X';
     }
 
+    // add a callback to the list of callbacks to be executed after each turn
+    registerTurnCallback(cb) {
+        this.turnCallBacks.push(cb);
+    }
+
     registerTurn(row, column) {
         // if the game is over or the space has already occupied, return immediately
         if (this.gameOver || this.board[row][column]) {
             return this.gameStatus;
         }
 
+        // update the slot that was selected to reflect the current player
         this.board[row][column] = this.playerTurn;
 
+        // check if the board is full, and update accordingly
         const boardFull = confirmBoardFull(this.board);
         if (boardFull) {
             this.gameOver = true;
             this.gameStatus = 'Tie game!';
         }
 
+        // check if there is a potential win, and update accordingly
         const potentialWin = confirmWin(this.board);
         if (potentialWin) {
             this.gameOver = true;
             this.gameStatus = `Player ${this.playerTurn} has won!`;
         }
 
+        // if neither teh board is full nor their is a winner, advance the player turn
         if (!boardFull && !potentialWin) {
             this.changePlayerTurn();
             this.gameStatus = `Player ${this.playerTurn}'s turn`;
         }
 
+        // execute all registered callbacks, passing in the current game as the argument
         this.turnCallBacks.forEach(cb => {
             cb(this);
-        })
-        
-    }
-
-    registerTurnCallback(cb) {
-        this.turnCallBacks.push(cb);
+        });
     }
 }
 
@@ -113,6 +118,7 @@ const confirmWin = (board) => {
     return null;
 }
 
+// helper funtion to determine if a board is full
 const confirmBoardFull = (board) => {
     for (let i = 0; i < board.length; i++) {
         let row = board[i];
