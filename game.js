@@ -26,7 +26,7 @@ class Game {
         const boardFull = confirmBoardFull(this.board);
         if (boardFull) {
             this.gameOver = true;
-            this.gameStatus = `Tie game!`;
+            this.gameStatus = 'Tie game!';
         }
 
         const potentialWin = confirmWin(this.board);
