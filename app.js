@@ -46,13 +46,27 @@ const updateWinTally = (game) => {
 
 // binds click handlers between the current game and the slots rendered on the dom
 const establishMoveClickHandlers = () => {
-    $('.slot').on('click', function() {
+    $('.slot').off().on('click', function() {
         console.log('hi')
         const row = $(this).data('row');
         const column = $(this).data('column');
         currentGame.registerTurn(row, column);
     });
 };
+
+// get player names and render
+promptPlayerNames = () => {
+    const xPlayerName = prompt('Who is playing as ❌?');
+    const oPlayerName = prompt('Who is playing as ⭕?');
+
+    if (xPlayerName) {
+        $('.x-player').text(`${xPlayerName} ❌`);
+    }
+
+    if (oPlayerName) {
+        $('.o-player').text(`${oPlayerName} ⭕`);
+    }
+}
 
 // creates a new game, registers callbacks to handle rendering, binds click handlers, and renders
 const initializeNewGame = () => {
@@ -77,20 +91,6 @@ const initializeNewGame = () => {
     establishMoveClickHandlers();
     renderBoard(currentGame);
     renderGameStatus(currentGame);
-}
-
-// get player names and render
-promptPlayerNames = () => {
-    const xPlayerName = prompt('Who is playing as ❌?');
-    const oPlayerName = prompt('Who is playing as ⭕?');
-
-    if (xPlayerName) {
-        $('.x-player').text(`${xPlayerName} ❌`);
-    }
-
-    if (oPlayerName) {
-        $('.o-player').text(`${oPlayerName} ⭕`);
-    }
 }
 
 // get everything rolling

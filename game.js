@@ -170,8 +170,8 @@ const moveOver = (board) => {
 }
 
 class RotatingGame extends Game {
-    constructor(props) {
-        super(props)
+    constructor(startingPlayer = 'X') {
+        super(startingPlayer)
     }
 
     registerTurn(row, column) {
