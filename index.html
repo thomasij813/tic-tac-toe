@@ -4,37 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <div class="win-tally">
-        <p><strong>Win Tally</strong></p>
-        <p>
-            <span class="x-player">X</span>: <span class="x-wins"></span></br>
-            <span class="o-player">O</span>: <span class="o-wins"></span>
-        </p>
-    </div>
-    <div class="head">
-        <button class="new-game-button">New Game</button>
-        <p class="game-status"></p>
-    </div>
-    
-    <div class="board">
-        <p>
-            <span data-row="0" data-column="0"></span>
-            <span data-row="0" data-column="1"></span>
-            <span data-row="0" data-column="2"></span>
-        </p>
-        <p>
-            <span data-row="1" data-column="0"></span>
-            <span data-row="1" data-column="1"></span>
-            <span data-row="1" data-column="2"></span>
-        </p>
-        <p>
-            <span data-row="2" data-column="0"></span>
-            <span data-row="2" data-column="1"></span>
-            <span data-row="2" data-column="2"></span>
-        </p>
+    <div class="main">
+        <h1>Tic Tac Toe</h1>
+        <div class="win-tally">
+            <p><strong>Win Tally</strong></p>
+            <p>
+                <span class="x-player">❌</span>: <span class="x-wins"></span></br>
+                <span class="o-player">⭕</span>: <span class="o-wins"></span>
+            </p>
+        </div>
+        <div class="head">
+            <button class="new-game-button">New Game</button>
+            <select class='game-type-select'>
+                <option value="regular" selected>Regular Board</option>
+                <option value="twist">With a Twist!</option>
+            </select>
+            <p class="game-status"></p>
+        </div>
+        
+        <div class="board">
+            <div class="slot" data-row="0" data-column="0">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="0" data-column="1">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="0" data-column="2">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="1" data-column="0">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="1" data-column="1">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="1" data-column="2">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="2" data-column="0">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="2" data-column="1">
+                <div class="slot-content"></div>
+            </div>
+            <div class="slot" data-row="2" data-column="2">
+                <div class="slot-content"></div>
+            </div>
+        </div>
     </div>
     
     <script

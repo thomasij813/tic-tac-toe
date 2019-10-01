@@ -1,13 +1,13 @@
 class Game {
-    constructor() {
+    constructor(startingPlayer = 'X') {
         this.board = [
             [null, null, null],
             [null, null, null],
             [null, null, null],
         ];
-        this.playerTurn = 'X';
+        this.playerTurn = startingPlayer;
         this.gameOver = false;
-        this.gameStatus = `Player X's turn`;
+        this.gameStatus = `Player ${startingPlayer}'s turn`;
         this.turnCallBacks = [];
     }
 
@@ -128,4 +128,86 @@ const confirmBoardFull = (board) => {
     }
 
     return true;
+}
+
+const rotateBoard = (board) => {
+    var out = [];
+    for (let i = 0; i < 3; i++) {
+        let o = []
+        for (let j = 2; j >= 0; j--) {
+            o.push(board[j][i]);
+        }
+        out.push(o)
+    }
+    return out;
+}
+
+// simulates applying gravity by first moving over the values in each row
+const moveOver = (board) => {
+    let out = []
+    board.forEach((row) => {
+        let newRow = row.filter(val => {
+            if (val) { return val; }
+        });
+
+        if (newRow.length === 0) {
+            out.push([null, null, null]);
+        }
+
+        if (newRow.length === 1) {
+            out.push([null, null, ...newRow]);
+        }
+
+        if (newRow.length === 2) {
+            out.push([null, ...newRow]);
+        }
+
+        if (newRow.length === 3) {
+            out.push(newRow);
+        }
+    });
+    return out;
+}
+
+class RotatingGame extends Game {
+    constructor(props) {
+        super(props)
+    }
+
+    registerTurn(row, column) {
+        // if the game is over or the space has already occupied, return immediately
+        if (this.gameOver || this.board[row][column]) {
+            return this.gameStatus;
+        }
+
+        // update the slot that was selected to reflect the current player
+        this.board[row][column] = this.playerTurn;
+
+        this.board = rotateBoard(moveOver(this.board));
+
+        // check if the board is full, and update accordingly
+        const boardFull = confirmBoardFull(this.board);
+        if (boardFull) {
+            this.gameOver = true;
+            this.gameStatus = 'Tie game!';
+        }
+
+        // check if there is a potential win, and update accordingly
+        const potentialWin = confirmWin(this.board);
+        if (potentialWin) {
+            this.gameOver = true;
+            this.gameStatus = `Player ${potentialWin} has won!`;
+        }
+
+        // if neither the board is full nor if there is a winner, advance the player turn
+        if (!boardFull && !potentialWin) {
+            this.changePlayerTurn();
+            this.gameStatus = `Player ${this.playerTurn}'s turn`;
+        }
+
+        // execute all registered callbacks, passing in the current game as the argument
+        this.turnCallBacks.forEach(cb => {
+            cb(this);
+        });
+    }
 }

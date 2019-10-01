@@ -4,6 +4,7 @@ let winTally = {
     X: 0,
     O: 0
 };
+let startingPlayer;
 
 // board rendering function
 const renderBoard = (game) => {
@@ -12,15 +13,21 @@ const renderBoard = (game) => {
         return accum.concat(row);
     }, []);
 
-    $('.board span').each(function(i) {
-        let val = flattenedBoard[i] ? flattenedBoard[i] : '_';
+    $('.slot-content').each(function(i) {
+        let val = null;
+
+        if (flattenedBoard[i]) {
+            val = flattenedBoard[i] === 'X' ? '❌' : '⭕';
+        }
+        
         $(this).html(val);
     });
 }
 
 // game status rendering function
 const renderGameStatus = (game) => {
-    $('.game-status').text(game.gameStatus);
+    let message = game.gameStatus.replace('X', '❌').replace('O', '⭕')
+    $('.game-status').text(message);
 };
 
 // win tally rendering function
@@ -39,7 +46,8 @@ const updateWinTally = (game) => {
 
 // binds click handlers between the current game and the slots rendered on the dom
 const establishMoveClickHandlers = () => {
-    $('.board span').on('click', function() {
+    $('.slot').on('click', function() {
+        console.log('hi')
         const row = $(this).data('row');
         const column = $(this).data('column');
         currentGame.registerTurn(row, column);
@@ -48,7 +56,19 @@ const establishMoveClickHandlers = () => {
 
 // creates a new game, registers callbacks to handle rendering, binds click handlers, and renders
 const initializeNewGame = () => {
-    currentGame = new Game();
+    if (!startingPlayer) {
+        startingPlayer = 'X';
+    } else {
+        startingPlayer = startingPlayer === 'X' ? 'O' : 'X';
+    }
+
+    const gameStyle = $('.game-type-select option:selected');
+
+    if (gameStyle.val() === 'regular') {
+        currentGame = new Game(startingPlayer);
+    } else {
+        currentGame = new RotatingGame(startingPlayer);
+    }
 
     currentGame.registerTurnCallback(renderBoard);
     currentGame.registerTurnCallback(renderGameStatus);
@@ -61,15 +81,15 @@ const initializeNewGame = () => {
 
 // get player names and render
 promptPlayerNames = () => {
-    const xPlayerName = prompt('Who is playing as X?');
-    const oPlayerName = prompt('Who is playing as O?');
+    const xPlayerName = prompt('Who is playing as ❌?');
+    const oPlayerName = prompt('Who is playing as ⭕?');
 
     if (xPlayerName) {
-        $('.x-player').text(`${xPlayerName} (X)`);
+        $('.x-player').text(`${xPlayerName} ❌`);
     }
 
     if (oPlayerName) {
-        $('.o-player').text(`${oPlayerName} (O)`);
+        $('.o-player').text(`${oPlayerName} ⭕`);
     }
 }
 
